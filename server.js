@@ -1,10 +1,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-const cors = require("cors");
+
 
 dotenv.config();
-
 const hotelDataAddedToDBRouter = require("./routes/dataimport.router");
 const categoryDataAddedToDBRouter = require("./routes/categoryimport.router");
 
@@ -18,16 +17,14 @@ const connectDB = require("./config/dbconfig.js");
 
 const app = express();
 
-app.use(cors());
 app.use(express.json());
 connectDB();
 
-const PORT = 3500;
+const PORT = 5000;
 
 app.get("/", (req, res) => {
   res.send("Hello Geeks");
 });
-
 app.use("/api/hoteldata", hotelDataAddedToDBRouter);
 app.use("/api/categorydata", categoryDataAddedToDBRouter);
 app.use("/api/hotels", hotelRouter);
@@ -38,6 +35,7 @@ app.use("/api/wishlist", wishlistRouter);
 
 mongoose.connection.once("open", () => {
   console.log("Connected to DB");
+  
   app.listen(process.env.PORT || PORT, () => {
     console.log("Server is Up and Running");
   });

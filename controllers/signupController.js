@@ -4,11 +4,12 @@ const User = require("../model/user.model");
 
 const singupHandler = async (req, res) => {
     try{
+        // console.log('result', CryptoJS.AES.encrypt(req.body.password, process.env.PASSWORD_SECRET_KEY).toString());
         const newUser = new User({
             username: req.body.username,
             number: req.body.number,
             email: req.body.email,
-            password: CryptoJS.AES.encrypt(req.body.password, process.env.PASSWORD_SECRET_KEY).toString()
+            password: CryptoJS.AES.encrypt(req.body.password, process.env.PASSWORD_SECRET_KEY).toString(),
         });
         const savedUser = await newUser.save();
         res.status(201).json(savedUser);
