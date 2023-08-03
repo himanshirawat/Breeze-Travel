@@ -23,7 +23,7 @@ connectDB();
 const PORT = 5000;
 
 app.get("/", (req, res) => {
-  res.send("Hello Geeks");
+  res.send("Hello Person why are you seeing my backend look at front-end");
 });
 app.use("/api/hoteldata", hotelDataAddedToDBRouter);
 app.use("/api/categorydata", categoryDataAddedToDBRouter);
@@ -35,7 +35,7 @@ app.use("/api/wishlist", wishlistRouter);
 
 mongoose.connection.once("open", () => {
   console.log("Connected to DB");
-  
+
   app.listen(process.env.PORT || PORT, () => {
     console.log("Server is Up and Running");
   });
