@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const cors = require('cors');
 
 
 dotenv.config();
@@ -21,6 +22,7 @@ const app = express();
 app.use(express.json());
 connectDB();
 
+
 const PORT = 5000;
 
 app.get("/", (req, res) => {
@@ -34,18 +36,7 @@ app.use("/api/hotels", singleHoterRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/wishlist", wishlistRouter);
 
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  res.header('Access-Control-Allow-Credentials','true');
-
-  if (req.method === 'OPTIONS'){
-    return res.status(204).end();
-  }
-
-  next();
-});
+app.use(cors());
 
 mongoose.connection.once("open", () => {
   console.log("Connected to DB");
