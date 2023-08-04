@@ -5,21 +5,6 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  res.header('Access-Control-Allow-Credentials','true');
-
-  if (req.method === 'OPTIONS'){
-    return res.status(204).end();
-  }
-
-  next();
-});
-
-
-
 const hotelDataAddedToDBRouter = require("./routes/dataimport.router");
 const categoryDataAddedToDBRouter = require("./routes/categoryimport.router");
 
@@ -48,6 +33,19 @@ app.use("/api/category", categoryRouter);
 app.use("/api/hotels", singleHoterRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/wishlist", wishlistRouter);
+
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.header('Access-Control-Allow-Credentials','true');
+
+  if (req.method === 'OPTIONS'){
+    return res.status(204).end();
+  }
+
+  next();
+});
 
 mongoose.connection.once("open", () => {
   console.log("Connected to DB");
